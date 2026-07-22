@@ -65,4 +65,4 @@ The difference is especially apparent on tighter turns and longer strings of cur
 While the pipeline reliably processes standard flat road layouts, it currently has the following scope limitations:
 * **No Elevation Support (Ramps/Slopes):** The geometry calculation operates strictly in a 2D coordinate space (`WorldX`, `WorldZ`). Vertical transitions such as ramps, hills, slopes, or loops are not supported.
 * **No Track Gaps or Jumps:** The topology sorting algorithm assumes a single, uninterrupted, continuous sequence of blocks from start to finish. Tracks with physical gaps, jumps, or disconnected sections cannot be mapped correctly.
-* **No Custom Blocks:** Because the continuous mapping relies on hardcoded modular arithmetic rul
+* **No Custom Blocks:** Because the continuous mapping relies on hardcoded modular arithmetic rules and Look-Up Tables (LUTs), the pipeline only supports standard, official Trackmania road blocks (e.g., `RoadTechStraight`, `RoadTechCurve1-3`). Custom mapping blocks or non-standard items will not be recognized.
