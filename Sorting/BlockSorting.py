@@ -68,7 +68,6 @@ class BlockSorting:
 
         remaining_df = df.drop(index=start_idx)
         current_block = df.loc[start_idx].copy()
-        counter = 0
 
         while not remaining_df.empty:
             best_candidate_idx = None
@@ -85,7 +84,6 @@ class BlockSorting:
             current_block = remaining_df.loc[best_candidate_idx].copy()
 
             remaining_df.drop(index=best_candidate_idx, inplace=True)
-            counter += 1
 
         sorted_df = df.loc[sorted_indices].reset_index(drop=True)
 
