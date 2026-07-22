@@ -1,0 +1,9 @@
+[meta]
+name = "Top down camera"
+author = "piotrowski-j46"
+category = "Track topology generator"
+version = "1.0"
+siteid = 910
+
+[script]
+dependencies = ["Editor Camera Unlocker"]
