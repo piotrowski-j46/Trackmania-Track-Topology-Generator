@@ -67,11 +67,7 @@ def parse_arguments() -> argparse.Namespace:
 
     return parser.parse_args()
 
-import time
-def current_mili_time():
-    return round(time.time() * 1000)
 def main() -> None:
-    start = current_mili_time()
     args = parse_arguments()
 
     input_path = os.path.expanduser(args.input)
@@ -124,9 +120,6 @@ def main() -> None:
                 print(f"[Warning] Could not load reference PKL files ({e}). Skipping PoC validation lines.")
 
         viz.render(title=f"Track Trajectory Visualization ({args.ref_name})")
-    with open(os.path.expanduser('~/time_avg.txt'), 'a') as f:
-        ran = str(current_mili_time() - start)
-        f.write(ran + '\n')
 
 if __name__ == "__main__":
     main()
