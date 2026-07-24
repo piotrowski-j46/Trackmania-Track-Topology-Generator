@@ -1,19 +1,12 @@
 from typing import Dict, List, Set
 
 class GridGeometryLUT:
-    """
-    Zunifikowany tablicowy system przesunięć (LUT) dla siatki 2D.
-    Wykorzystuje arytmetykę modularną i indeksowanie promieniem r in {1, 2, 3}.
-    """
 
-    # --- 1. GENERATORY KIERUNKOWE MODULO Z_4 ---
-    # Zamiast hardkodować zbiory, wyliczamy relacje cykliczne w czasie inicjalizacji modułu.
     STRAIGHT_DIRS: Dict[int, Set[int]]       = {d: {d, (d + 2) % 4} for d in range(4)}
     SHIFTED_DIRS: Dict[int, Set[int]]        = {d: {(d + 2) % 4} for d in range(4)}
     CURVE_DIRS: Dict[int, Set[int]]          = {d: {(d + 1) % 4, (d + 2) % 4} for d in range(4)}
     CURVE_TO_CURVE_DIRS: Dict[int, Set[int]] = {d: {(d + 1) % 4, (d + 2) % 4, (d + 3) % 4} for d in range(4)}
 
-    # --- 2. BAZOWE PRZESUNIĘCIA PROSTE ---
     STRAIGHT_SHIFT: Dict[int, List[int]] = {
         0: [0, 1, 0, -1],
         1: [1, 0, -1, 0],
@@ -21,7 +14,6 @@ class GridGeometryLUT:
         3: [1, 0, -1, 0],
     }
 
-    # --- 3. PRZESUNIĘCIA WEWNĘTRZNE ZAKRĘTÓW [promień][from_dir][to_dir] ---
     CURVE_SHIFT = {
         1: {0: [0, 1], 1: [-1, 0], 2: [0, -1], 3: [1, 0]},
         2: {
@@ -38,7 +30,6 @@ class GridGeometryLUT:
         },
     }
 
-    # --- 4. PRZEJŚCIA ZAKRĘT -> PROSTA [promień][from_dir][to_dir] ---
     CURVE_TO_STRAIGHT = {
         1: {
             0: {0: [0, 1],  2: [0, 1],  1: [-1, 0], 3: [-1, 0]},
@@ -60,8 +51,6 @@ class GridGeometryLUT:
         },
     }
 
-    # --- 5. PRZEJŚCIA ZAKRĘT -> ZAKRĘT [from_r][to_r][from_dir][to_dir] ---
-    # Struktura zunifikowana: eliminuje 9 osobnych nazw zmiennych globalnych
     CURVE_TO_CURVE = {
         1: {
             1: {
@@ -127,5 +116,4 @@ class GridGeometryLUT:
 
     @classmethod
     def get_curve_to_curve_shift(cls, from_radius: int, to_radius: int, from_dir: int, to_dir: int) -> List[int]:
-        """Dostęp O(1) zastępujący odpytywanie 9 osobnych słowników."""
         return cls.CURVE_TO_CURVE[from_radius][to_radius][from_dir][to_dir]
